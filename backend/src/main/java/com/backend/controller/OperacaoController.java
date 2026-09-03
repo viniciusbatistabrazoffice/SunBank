@@ -26,8 +26,30 @@ public class OperacaoController {
     }
 
     @GetMapping("/list")
+    public ResponseEntity<Operacao> list(Operacao operacao){
+        try {
+            ResponseEntity.ok();
+        }catch (Exception ex){
+            ResponseEntity.internalServerError();
+        }
+    }
 
     @PutMapping("/edit")
+    ResponseEntity<Operacao> update(Operacao operacao){
+        try {
+            ResponseEntity.ok();
+        }catch (Exception ex){
+            ResponseEntity.internalServerError();
+        }
+    }
 
     @DeleteMapping("/delete")
+    ResponseEntity<Operacao> delete(Operacao operacao){
+        try {
+            ResponseEntity.ok();
+        }catch (Exception ex){
+            ResponseEntity.internalServerError();
+        }
+    }
+
 }
