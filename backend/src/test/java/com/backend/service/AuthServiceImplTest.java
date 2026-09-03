@@ -37,7 +37,7 @@ class AuthServiceImplTest {
         Auth result = authService.signin(credentials);
 
         assertEquals("joao", result.getUsername());
-        assertNotNull(result.getSessionToken());
+        assertNotNull(result.getAuthToken());
         verify(authRepository).findByUsername("joao");
         verify(authRepository).save(stored);
     }
@@ -71,13 +71,13 @@ class AuthServiceImplTest {
     void signoutShouldClearTokenWhenSessionExists() {
         BigInteger token = new BigInteger("123456");
         Auth session = new Auth(1L, "joao", "123456", token);
-        when(authRepository.findBySessionToken(token)).thenReturn(Optional.of(session));
+        when(authRepository.findByAuthToken(token)).thenReturn(Optional.of(session));
         when(authRepository.save(session)).thenReturn(session);
 
         Auth result = authService.signout(session);
 
-        assertNull(result.getSessionToken());
-        verify(authRepository).findBySessionToken(token);
+        assertNull(result.getAuthToken());
+        verify(authRepository).findByAuthToken(token);
         verify(authRepository).save(session);
     }
 
@@ -85,12 +85,12 @@ class AuthServiceImplTest {
     void signoutShouldThrowRuntimeExceptionWhenSessionNotFound() {
         BigInteger token = new BigInteger("123456");
         Auth session = new Auth(null, "joao", "123456", token);
-        when(authRepository.findBySessionToken(token)).thenReturn(Optional.empty());
+        when(authRepository.findByAuthToken(token)).thenReturn(Optional.empty());
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> authService.signout(session));
 
         assertEquals("Session not found", exception.getMessage());
-        verify(authRepository).findBySessionToken(token);
+        verify(authRepository).findByAuthToken(token);
         verify(authRepository, never()).save(any());
     }
 
@@ -103,7 +103,7 @@ class AuthServiceImplTest {
 
         Auth result = authService.forgot(request);
 
-        assertNotNull(result.getSessionToken());
+        assertNotNull(result.getAuthToken());
         verify(authRepository).findByUsername("joao");
         verify(authRepository).save(stored);
     }
@@ -125,14 +125,14 @@ class AuthServiceImplTest {
         BigInteger token = new BigInteger("123456");
         Auth stored = new Auth(1L, "joao", "123456", token);
         Auth request = new Auth(null, null, "newpass", token);
-        when(authRepository.findBySessionToken(token)).thenReturn(Optional.of(stored));
+        when(authRepository.findByAuthToken(token)).thenReturn(Optional.of(stored));
         when(authRepository.save(stored)).thenReturn(stored);
 
         Auth result = authService.reset(request);
 
         assertEquals("newpass", result.getPassword());
-        assertNull(result.getSessionToken());
-        verify(authRepository).findBySessionToken(token);
+        assertNull(result.getAuthToken());
+        verify(authRepository).findByAuthToken(token);
         verify(authRepository).save(stored);
     }
 
@@ -141,14 +141,14 @@ class AuthServiceImplTest {
         BigInteger token = new BigInteger("123456");
         Auth stored = new Auth(1L, "joao", "123456", token);
         Auth request = new Auth(null, null, "   ", token);
-        when(authRepository.findBySessionToken(token)).thenReturn(Optional.of(stored));
+        when(authRepository.findByAuthToken(token)).thenReturn(Optional.of(stored));
         when(authRepository.save(stored)).thenReturn(stored);
 
         Auth result = authService.reset(request);
 
         assertEquals("123456", result.getPassword());
-        assertNull(result.getSessionToken());
-        verify(authRepository).findBySessionToken(token);
+        assertNull(result.getAuthToken());
+        verify(authRepository).findByAuthToken(token);
         verify(authRepository).save(stored);
     }
 
@@ -156,12 +156,12 @@ class AuthServiceImplTest {
     void resetShouldThrowRuntimeExceptionWhenTokenIsInvalid() {
         BigInteger token = new BigInteger("123456");
         Auth request = new Auth(null, null, "newpass", token);
-        when(authRepository.findBySessionToken(token)).thenReturn(Optional.empty());
+        when(authRepository.findByAuthToken(token)).thenReturn(Optional.empty());
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> authService.reset(request));
 
         assertEquals("Invalid reset token", exception.getMessage());
-        verify(authRepository).findBySessionToken(token);
+        verify(authRepository).findByAuthToken(token);
         verify(authRepository, never()).save(any());
     }
 }

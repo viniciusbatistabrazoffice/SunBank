@@ -1,6 +1,6 @@
 # SunBank Backend
 
-Backend do projeto SunBank, responsável pelo gerenciamento de operações bancárias através de uma API REST desenvolvida com Spring Boot.
+Backend do projeto SunBank, responsável pela reutilização de criptomoedas e transferência/conversão dos valores para reais (BRL). Oferece autenticação, cadastro de clientes e registro de operações bancárias via API REST com Spring Boot.
 
 ## Tecnologias
 
@@ -16,7 +16,8 @@ Backend do projeto SunBank, responsável pelo gerenciamento de operações banc�
 
 - JDK 17 ou superior
 - Maven 3.6+ (ou usar o wrapper `./mvnw` incluso)
-- PostgreSQL 12+ com banco de dados `sunbank` criado
+- PostgreSQL 12+ com usuário `postgres`
+- Banco de dados `sunbank` criado (o script `./run.sh` cria automaticamente)
 - Credenciais de acesso ao banco configuradas em `src/main/resources/application.properties`
 
 ## Configuração
@@ -24,11 +25,15 @@ Backend do projeto SunBank, responsável pelo gerenciamento de operações banc�
 As configurações do banco de dados estão no arquivo `src/main/resources/application.properties`:
 
 ```properties
+spring.application.name=backend
+
+# PostgreSQL
 spring.datasource.url=jdbc:postgresql://localhost:5432/sunbank
 spring.datasource.username=postgres
-spring.datasource.password=postgres
+spring.datasource.password=admin123
 spring.datasource.driver-class-name=org.postgresql.Driver
 
+# JPA / Hibernate
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
@@ -38,16 +43,16 @@ Ajuste a URL, usuário e senha conforme o seu ambiente.
 
 ## Como executar
 
-Compile e execute a aplicação com Maven:
+A forma mais simples é usar o script `run.sh`, que cria o banco `sunbank` (se ainda não existir) e inicia a aplicação:
+
+```bash
+./run.sh
+```
+
+Ou, para executar manualmente com Maven:
 
 ```bash
 ./mvnw spring-boot:run
-```
-
-Ou, se preferir usar Maven instalado:
-
-```bash
-mvn spring-boot:run
 ```
 
 A aplicação será iniciada e estará disponível por padrão em `http://localhost:8080`.
@@ -58,28 +63,103 @@ A aplicação será iniciada e estará disponível por padrão em `http://localh
 src/main/java/com/backend/
 ├── BackendApplication.java      # Ponto de entrada da aplicação
 ├── controller/
+│   ├── AuthController.java      # Endpoints de autenticação
+│   ├── ClientController.java    # Endpoints REST para clientes
 │   └── OperacaoController.java  # Endpoints REST para operações
 ├── entity/
+│   ├── Auth.java                # Entidade de autenticação
+│   ├── Client.java              # Entidade de cliente
 │   └── Operacao.java            # Entidade JPA de operação bancária
 ├── repository/
-│   └── OperacaoRepository.java  # Acesso ao banco de dados via Spring Data JPA
+│   ├── AuthRepository.java
+│   ├── ClientRepository.java
+│   └── OperacaoRepository.java
 └── service/
-    ├── OperacaoService.java     # Interface do serviço de operações
-    └── OperacaoServiceImpl.java # Implementação do serviço
+    ├── AuthService.java
+    ├── AuthServiceImpl.java
+    ├── ClientService.java
+    ├── ClientServiceImpl.java
+    ├── OperacaoService.java
+    └── OperacaoServiceImpl.java
+
+src/test/java/com/backend/
+├── BackendApplicationTests.java
+├── service/
+│   ├── AuthServiceImplTest.java
+│   ├── ClientServiceImplTest.java
+│   └── OperacaoServiceImplTest.java
 ```
 
 ## Endpoints da API
 
-Base URL: `http://localhost:8080/operacoes`
+A aplicação expõe as seguintes APIs REST:
 
-| Método | Endpoint      | Descrição                          |
-|--------|---------------|------------------------------------|
-| POST   | `/operacoes`  | Cria uma nova operação             |
-| GET    | `/operacoes`  | Lista todas as operações           |
-| PUT    | `/operacoes/{id}` | Atualiza uma operação existente |
-| DELETE | `/operacoes/{id}` | Remove uma operação             |
+### Autenticação — Base URL: `/auth`
 
-### Exemplo de payload (POST /operacoes)
+| Método | Endpoint         | Descrição                         |
+|--------|------------------|-----------------------------------|
+| POST   | `/auth/signin`   | Realiza login                     |
+| POST   | `/auth/signout`  | Realiza logout                    |
+| POST   | `/auth/forgot`   | Solicita recuperação de acesso    |
+| POST   | `/auth/reset`    | Redefine credenciais              |
+
+### Clientes — Base URL: `/clients`
+
+| Método | Endpoint        | Descrição                          |
+|--------|-----------------|------------------------------------|
+| POST   | `/clients`      | Cria um novo cliente               |
+| GET    | `/clients`      | Lista todos os clientes            |
+| PUT    | `/clients/{id}` | Atualiza um cliente existente      |
+| DELETE | `/clients/{id}` | Remove um cliente                  |
+
+### Operações — Base URL: `/operacoes`
+
+| Método | Endpoint          | Descrição                          |
+|--------|-------------------|------------------------------------|
+| POST   | `/operacoes`      | Cria uma nova operação             |
+| GET    | `/operacoes`      | Lista todas as operações           |
+| PUT    | `/operacoes/{id}` | Atualiza uma operação existente    |
+| DELETE | `/operacoes/{id}` | Remove uma operação                |
+
+### Exemplo de payload para autenticação
+
+```json
+{
+  "username": "usuario",
+  "password": "senha123",
+  "authToken": 1234567890123456789
+}
+```
+
+### Exemplo de payload para criação de cliente
+
+```json
+{
+  "fullName": "João da Silva",
+  "cpf": "12345678901",
+  "rg": "1234567",
+  "email": "joao@email.com",
+  "phone": "11999999999",
+  "birthDate": "1990-05-15",
+  "maritalStatus": "SOLTEIRO",
+  "nationality": "Brasileiro",
+  "occupation": "Engenheiro",
+  "monthlyIncome": 7500.00,
+  "netWorth": 150000.00,
+  "cryptocurrencyTokenId": "BTC-123456",
+  "zipCode": "01001000",
+  "street": "Rua A",
+  "number": "100",
+  "complement": "Apto 1",
+  "neighborhood": "Centro",
+  "city": "São Paulo",
+  "state": "SP"
+}
+```
+
+> O campo `cryptocurrencyTokenId` vincula o identificador do token de criptomoeda do cliente, utilizado no processo de reutilização e conversão para reais.
+
+### Exemplo de payload para criação de operação
 
 ```json
 {
@@ -96,7 +176,7 @@ Base URL: `http://localhost:8080/operacoes`
 - `DEPOSITO`
 - `SAQUE`
 - `TRANSFERENCIA`
-- `CONVERSAO`
+- `CONVERSAO` — converte/reutiliza criptomoeda e transfere o valor correspondente em reais (BRL)
 
 ### Status da operação
 
@@ -118,7 +198,7 @@ Para executar os testes:
 ./mvnw test
 ```
 
-O projeto conta com um teste básico de carregamento de contexto em `src/test/java/com/backend/BackendApplicationTests.java`.
+O projeto conta com testes de carregamento de contexto e testes unitários/integração para os serviços em `src/test/java/com/backend/service/`.
 
 ## Build e execução via JAR
 
@@ -141,20 +221,20 @@ Você pode sobrescrever as configurações do banco de dados usando variáveis d
 ```bash
 export SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/sunbank
 export SPRING_DATASOURCE_USERNAME=postgres
-export SPRING_DATASOURCE_PASSWORD=postgres
+export SPRING_DATASOURCE_PASSWORD=admin123
 ```
 
 Ou passar diretamente na execução:
 
 ```bash
-./mvnw spring-boot:run -Dspring-boot.run.arguments="--spring.datasource.url=jdbc:postgresql://localhost:5432/sunbank --spring.datasource.username=postgres --spring.datasource.password=postgres"
+./mvnw spring-boot:run -Dspring-boot.run.arguments="--spring.datasource.url=jdbc:postgresql://localhost:5432/sunbank --spring.datasource.username=postgres --spring.datasource.password=admin123"
 ```
 
 ## Solução de problemas
 
 | Problema | Possível causa | Solução |
 |----------|----------------|---------|
-| Falha ao conectar no banco | PostgreSQL não está rodando ou banco `sunbank` não existe | Verifique se o PostgreSQL está ativo e crie o banco `sunbank` |
+| Falha ao conectar no banco | PostgreSQL não está rodando ou banco `sunbank` não existe | Verifique se o PostgreSQL está ativo e crie o banco `sunbank` (ou use `./run.sh`) |
 | Erro de autenticação | Usuário ou senha incorretos | Confira as credenciais em `application.properties` ou variáveis de ambiente |
 | Porta 8080 em uso | Outro processo está usando a porta | Altere a porta com `--server.port=8081` ou finalize o processo anterior |
 | Spring Boot não inicia | Versão do JDK inferior a 17 | Instale e configure o JDK 17 ou superior |

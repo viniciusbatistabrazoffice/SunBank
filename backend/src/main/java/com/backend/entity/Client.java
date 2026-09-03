@@ -50,8 +50,8 @@ public class Client {
     @Column(precision = 19, scale = 2)
     private BigDecimal netWorth;
 
-    @Column(name = "crypto_token_id", length = 100)
-    private String cryptoTokenId;
+    @Column(name = "cryptocurrency_token_id", length = 100)
+    private String cryptocurrencyTokenId;
 
     @Column(name = "credit_score")
     private Integer creditScore;
@@ -205,12 +205,12 @@ public class Client {
         this.netWorth = netWorth;
     }
 
-    public String getCryptoTokenId() {
-        return cryptoTokenId;
+    public String getCryptocurrencyTokenId() {
+        return cryptocurrencyTokenId;
     }
 
-    public void setCryptoTokenId(String cryptoTokenId) {
-        this.cryptoTokenId = cryptoTokenId;
+    public void setCryptocurrencyTokenId(String cryptocurrencyTokenId) {
+        this.cryptocurrencyTokenId = cryptocurrencyTokenId;
     }
 
     public Integer getCreditScore() {

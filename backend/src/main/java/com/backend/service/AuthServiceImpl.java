@@ -25,18 +25,18 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Invalid credentials");
         }
         Auth user = existing.get();
-        user.setSessionToken(new BigInteger(64, random));
+        user.setAuthToken(new BigInteger(64, random));
         return authRepository.save(user);
     }
 
     @Override
     public Auth signout(Auth auth) {
-        Optional<Auth> existing = authRepository.findBySessionToken(auth.getSessionToken());
+        Optional<Auth> existing = authRepository.findByAuthToken(auth.getAuthToken());
         if (existing.isEmpty()) {
             throw new RuntimeException("Session not found");
         }
         Auth user = existing.get();
-        user.setSessionToken(null);
+        user.setAuthToken(null);
         return authRepository.save(user);
     }
 
@@ -47,13 +47,13 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("User not found");
         }
         Auth user = existing.get();
-        user.setSessionToken(new BigInteger(64, random));
+        user.setAuthToken(new BigInteger(64, random));
         return authRepository.save(user);
     }
 
     @Override
     public Auth reset(Auth auth) {
-        Optional<Auth> existing = authRepository.findBySessionToken(auth.getSessionToken());
+        Optional<Auth> existing = authRepository.findByAuthToken(auth.getAuthToken());
         if (existing.isEmpty()) {
             throw new RuntimeException("Invalid reset token");
         }
@@ -61,7 +61,7 @@ public class AuthServiceImpl implements AuthService {
         if (auth.getPassword() != null && !auth.getPassword().isBlank()) {
             user.setPassword(auth.getPassword());
         }
-        user.setSessionToken(null);
+        user.setAuthToken(null);
         return authRepository.save(user);
     }
 }
