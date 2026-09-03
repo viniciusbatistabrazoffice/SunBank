@@ -1,7 +1,10 @@
+version: "3.8"
+
 services:
-  db:
+  postgres:
     image: postgres:16-alpine
-    container_name: sunbank_db
+    container_name: sunbank_postgres
+    restart: unless-stopped
     environment:
       POSTGRES_DB: sunbank
       POSTGRES_USER: postgres
@@ -12,21 +15,23 @@ services:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d sunbank"]
-      interval: 5s
+      interval: 10s
       timeout: 5s
       retries: 5
 
-  app:
+  backend:
     build: .
-    container_name: sunbank_app
+    container_name: sunbank_backend
+    restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "9090:9090"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/sunbank
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/sunbank
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: admin123
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
 
 volumes:
