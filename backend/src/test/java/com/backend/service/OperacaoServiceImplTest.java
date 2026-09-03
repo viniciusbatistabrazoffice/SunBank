@@ -56,11 +56,10 @@ class OperacaoServiceImplTest {
         );
         when(operacaoRepository.findAll()).thenReturn(Collections.singletonList(operacao));
 
-        Optional<java.util.List<Operacao>> result = operacaoService.list(operacao);
+        java.util.List<Operacao> result = operacaoService.list();
 
-        assertTrue(result.isPresent());
-        assertEquals(1, result.get().size());
-        assertEquals(operacao, result.get().get(0));
+        assertEquals(1, result.size());
+        assertEquals(operacao, result.get(0));
     }
 
     @Test

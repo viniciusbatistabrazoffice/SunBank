@@ -30,7 +30,7 @@ public class OperacaoController {
     @GetMapping
     public ResponseEntity<List<Operacao>> list() {
         try {
-            List<Operacao> operacoes = operacaoService.list(null).orElse(null);
+            List<Operacao> operacoes = operacaoService.list();
             return ResponseEntity.ok(operacoes);
         } catch (Exception ex) {
             return ResponseEntity.internalServerError().build();

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface ClientService {
     Client save(Client client);
-    Optional<List<Client>> list(Client client);
+    List<Client> list();
     Client update(Client client);
     Client delete(Client client);
 }

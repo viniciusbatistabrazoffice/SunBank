@@ -22,10 +22,10 @@ public class OperacaoServiceImpl implements OperacaoService {
     }
 
     @Override
-    public Optional<List<Operacao>> list(Operacao operacao) {
+    public List<Operacao> list() {
         List<Operacao> operacoes = new ArrayList<>();
         operacaoRepository.findAll().forEach(operacoes::add);
-        return Optional.of(operacoes);
+        return operacoes;
     }
 
     @Override

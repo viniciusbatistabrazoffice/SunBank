@@ -22,10 +22,10 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Optional<List<Client>> list(Client client) {
+    public List<Client> list() {
         List<Client> clients = new ArrayList<>();
         clientRepository.findAll().forEach(clients::add);
-        return Optional.of(clients);
+        return clients;
     }
 
     @Override

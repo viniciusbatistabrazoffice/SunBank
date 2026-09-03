@@ -30,7 +30,7 @@ public class ClientController {
     @GetMapping
     public ResponseEntity<List<Client>> list() {
         try {
-            List<Client> clients = clientService.list(null).orElse(null);
+            List<Client> clients = clientService.list();
             return ResponseEntity.ok(clients);
         } catch (Exception ex) {
             return ResponseEntity.internalServerError().build();

@@ -43,11 +43,10 @@ class ClientServiceImplTest {
         Client client = new Client("Maria Souza", "09876543211", "maria@email.com", "11888888888");
         when(clientRepository.findAll()).thenReturn(Collections.singletonList(client));
 
-        Optional<java.util.List<Client>> result = clientService.list(client);
+        java.util.List<Client> result = clientService.list();
 
-        assertTrue(result.isPresent());
-        assertEquals(1, result.get().size());
-        assertEquals(client, result.get().get(0));
+        assertEquals(1, result.size());
+        assertEquals(client, result.get(0));
     }
 
     @Test

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface OperacaoService {
     Operacao save(Operacao operacao);
-    Optional<List<Operacao>> list(Operacao operacao);
+    List<Operacao> list();
     Operacao update(Operacao operacao);
     Operacao delete(Operacao operacao);
 }
