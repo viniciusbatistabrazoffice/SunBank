@@ -21,16 +21,16 @@ public class Auth {
 
     @Column(nullable = false)
     private String password;
-    private BigInteger token;
+    private BigInteger sessionToken;
 
     public Auth() {
     }
 
-    public Auth(Long id, String username, String password, BigInteger token) {
+    public Auth(Long id, String username, String password, BigInteger sessionToken) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.token = token;
+        this.sessionToken = sessionToken;
     }
 
     public Long getId() {
@@ -57,11 +57,11 @@ public class Auth {
         this.password = password;
     }
 
-    public BigInteger getToken() {
-        return token;
+    public BigInteger getSessionToken() {
+        return sessionToken;
     }
 
-    public void setToken(BigInteger token) {
-        this.token = token;
+    public void setSessionToken(BigInteger sessionToken) {
+        this.sessionToken = sessionToken;
     }
 }
