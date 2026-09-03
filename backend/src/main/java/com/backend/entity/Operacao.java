@@ -116,14 +116,13 @@ public class Operacao {
 
     public enum TipoOperacao {
         DEPOSITO,
-        SAQUE,
         TRANSFERENCIA,
         CONVERSAO
     }
 
     public enum StatusOperacao {
         PENDENTE,
-        CONClUIDA,
+        CONCLUIDA,
         CANCELADA
     }
 }
