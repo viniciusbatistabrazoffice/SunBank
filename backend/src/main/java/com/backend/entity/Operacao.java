@@ -123,7 +123,7 @@ public class Operacao {
 
     public enum StatusOperacao {
         PENDENTE,
-        CONCLUIDA,
+        CONCUIDA,
         CANCELADA
     }
 }
