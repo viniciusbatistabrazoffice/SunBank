@@ -1,4 +1,4 @@
-# SunBank - Backend
+# SunBank Backend
 
 Backend do projeto SunBank, responsável pelo gerenciamento de operações bancárias através de uma API REST desenvolvida com Spring Boot.
 
