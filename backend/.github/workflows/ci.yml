@@ -28,6 +28,7 @@ jobs:
           cache: 'maven'
 
       - name: Run tests with Maven
+        working-directory: ./backend
         run: ./mvnw -B test
 
       - name: Set Docker image name
