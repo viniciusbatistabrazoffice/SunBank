@@ -17,7 +17,9 @@ public class OperacaoController {
     @PostMapping("/save")
     public ResponseEntity<Operacao> save(Operacao operacao){
         try {
-            ResponseEntity.created();
+            Operacao operacao1 = operacaoService.save(operacao);
+
+            ResponseEntity.ok();
         }catch (Exception ex){
             ResponseEntity.internalServerError();
         }
