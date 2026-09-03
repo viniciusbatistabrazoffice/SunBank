@@ -116,7 +116,6 @@ public class Operacao {
 
     public enum TipoOperacao {
         DEPOSITO,
-        SAQUE,
         TRANSFERENCIA,
         CONVERSAO
     }

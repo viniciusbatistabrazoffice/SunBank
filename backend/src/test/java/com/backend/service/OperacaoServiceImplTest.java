@@ -48,11 +48,11 @@ class OperacaoServiceImplTest {
     @Test
     void listShouldReturnAllOperacoes() {
         Operacao operacao = new Operacao(
-                Operacao.TipoOperacao.SAQUE,
+                Operacao.TipoOperacao.DEPOSITO,
                 BigDecimal.valueOf(50.00),
                 2L,
                 null,
-                "Saque"
+                "Depósito"
         );
         when(operacaoRepository.findAll()).thenReturn(Collections.singletonList(operacao));
 
@@ -124,11 +124,11 @@ class OperacaoServiceImplTest {
     @Test
     void deleteShouldThrowRuntimeExceptionWhenOperacaoNotFound() {
         Operacao operacao = new Operacao(
-                Operacao.TipoOperacao.SAQUE,
+                Operacao.TipoOperacao.DEPOSITO,
                 BigDecimal.valueOf(50.00),
                 2L,
                 null,
-                "Saque"
+                "Depósito"
         );
         operacao.setId(1L);
         when(operacaoRepository.findById(1L)).thenReturn(Optional.empty());
