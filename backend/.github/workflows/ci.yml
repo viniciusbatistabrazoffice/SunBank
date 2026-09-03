@@ -27,11 +27,8 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Run tests
+      - name: Run tests with Maven
         run: ./mvnw -B test
-
-      - name: Build JAR
-        run: ./mvnw -B package -DskipTests
 
       - name: Set Docker image name
         run: |
