@@ -57,4 +57,14 @@ public class AuthController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @PostMapping("/signup")
+    public ResponseEntity<Auth> signup(@RequestBody Auth auth) {
+        try {
+            Auth signedUp = authService.signup(auth);
+            return ResponseEntity.ok(signedUp);
+        } catch (Exception ex) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

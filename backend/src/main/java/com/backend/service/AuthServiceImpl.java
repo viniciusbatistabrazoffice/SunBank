@@ -64,4 +64,23 @@ public class AuthServiceImpl implements AuthService {
         user.setAuthToken(null);
         return authRepository.save(user);
     }
+
+    @Override
+    public Auth signup(Auth auth) {
+        if (auth.getUsername() == null || auth.getUsername().isBlank()
+                || auth.getPassword() == null || auth.getPassword().isBlank()
+                || auth.getEmail() == null || auth.getEmail().isBlank()
+                || auth.getClientId() == null) {
+            throw new RuntimeException("Missing required fields");
+        }
+        if (authRepository.findByUsername(auth.getUsername()).isPresent()) {
+            throw new RuntimeException("Username already exists");
+        }
+        Auth user = new Auth();
+        user.setUsername(auth.getUsername());
+        user.setPassword(auth.getPassword());
+        user.setEmail(auth.getEmail());
+        user.setClientId(auth.getClientId());
+        return authRepository.save(user);
+    }
 }

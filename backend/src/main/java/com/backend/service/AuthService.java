@@ -7,4 +7,5 @@ public interface AuthService {
     Auth signout(Auth auth);
     Auth forgot(Auth auth);
     Auth reset(Auth auth);
+    Auth signup(Auth auth);
 }
