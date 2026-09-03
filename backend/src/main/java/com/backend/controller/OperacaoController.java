@@ -1,6 +1,8 @@
 package com.backend.controller;
 
+import com.backend.entity.Operacao;
 import com.backend.service.OperacaoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,6 +15,13 @@ public class OperacaoController {
     }
 
     @PostMapping("/save")
+    public ResponseEntity<Operacao> save(Operacao operacao){
+        try {
+            ResponseEntity.created();
+        }catch (Exception ex){
+            ResponseEntity.internalServerError();
+        }
+    }
 
     @GetMapping("/list")
 
