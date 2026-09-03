@@ -19,7 +19,7 @@ public class OperacaoController {
         try {
             Operacao operacao1 = operacaoService.save(operacao);
 
-            ResponseEntity.ok();
+            ResponseEntity.ok(operacao1);
         }catch (Exception ex){
             ResponseEntity.internalServerError();
         }
