@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM maven:3.9-eclipse-temurin-17 AS build
+FROM maven:3.8.3-openjdk-16-slim AS build
 WORKDIR /app
 
 # Baixa dependências primeiro para aproveitar cache de camadas
@@ -10,7 +10,7 @@ RUN mvn dependency:go-offline -B
 COPY src ./src
 RUN mvn clean package -DskipTests -B
 
-FROM eclipse-temurin:17-jre-alpine
+FROM adoptopenjdk/openjdk16:jre-16.0.1_9-alpine
 WORKDIR /app
 
 COPY --from=build /app/target/*.jar app.jar

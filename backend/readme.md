@@ -8,7 +8,7 @@ Para a documentação completa do projeto — arquitetura, endpoints, modelos de
 
 ### Requisitos
 
-- JDK 17+
+- JDK 16+
 - Maven 3.6+ (ou `./mvnw` incluso)
 - Docker / Docker Compose (recomendado) ou PostgreSQL 12+
 
