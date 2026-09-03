@@ -5,7 +5,10 @@ import com.backend.service.OperacaoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@RequestMapping("/operacoes")
 public class OperacaoController {
 
     private final OperacaoService operacaoService;
@@ -14,41 +17,46 @@ public class OperacaoController {
         this.operacaoService = operacaoService;
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<Operacao> save(Operacao operacao){
+    @PostMapping
+    public ResponseEntity<Operacao> save(@RequestBody Operacao operacao) {
         try {
-            Operacao operacao1 = operacaoService.save(operacao);
-
-            ResponseEntity.ok(operacao1);
-        }catch (Exception ex){
-            ResponseEntity.internalServerError();
+            Operacao saved = operacaoService.save(operacao);
+            return ResponseEntity.ok(saved);
+        } catch (Exception ex) {
+            return ResponseEntity.internalServerError().build();
         }
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<Operacao> list(Operacao operacao){
+    @GetMapping
+    public ResponseEntity<List<Operacao>> list() {
         try {
-            ResponseEntity.ok();
-        }catch (Exception ex){
-            ResponseEntity.internalServerError();
+            List<Operacao> operacoes = operacaoService.list(null).orElse(null);
+            return ResponseEntity.ok(operacoes);
+        } catch (Exception ex) {
+            return ResponseEntity.internalServerError().build();
         }
     }
 
-    @PutMapping("/edit")
-    ResponseEntity<Operacao> update(Operacao operacao){
+    @PutMapping("/{id}")
+    public ResponseEntity<Operacao> update(@PathVariable Long id, @RequestBody Operacao operacao) {
         try {
-            ResponseEntity.ok();
-        }catch (Exception ex){
-            ResponseEntity.internalServerError();
+            operacao.setId(id);
+            Operacao updated = operacaoService.update(operacao);
+            return ResponseEntity.ok(updated);
+        } catch (Exception ex) {
+            return ResponseEntity.internalServerError().build();
         }
     }
 
-    @DeleteMapping("/delete")
-    ResponseEntity<Operacao> delete(Operacao operacao){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Operacao> delete(@PathVariable Long id) {
         try {
-            ResponseEntity.ok();
-        }catch (Exception ex){
-            ResponseEntity.internalServerError();
+            Operacao operacao = new Operacao();
+            operacao.setId(id);
+            Operacao deleted = operacaoService.delete(operacao);
+            return ResponseEntity.ok(deleted);
+        } catch (Exception ex) {
+            return ResponseEntity.internalServerError().build();
         }
     }
 
