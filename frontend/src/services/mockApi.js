@@ -65,6 +65,9 @@ export async function mockRequest(path, options = {}) {
         amount: data.amount,
         currency: data.currency,
         recipient: data.recipient,
+        bank: data.bank,
+        agency: data.agency,
+        accountNumber: data.accountNumber,
       };
     }
 
@@ -101,6 +104,8 @@ export async function mockRequest(path, options = {}) {
         amount: data.amount,
         rate,
         value,
+        accountNumber: data.accountNumber,
+        agency: data.agency,
       };
     }
 

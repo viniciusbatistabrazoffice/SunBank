@@ -1,4 +1,5 @@
 import { request } from './api';
+import { marketService } from './marketService';
 
 export const cryptoService = {
   async getBalances() {
@@ -10,6 +11,10 @@ export const cryptoService = {
   },
 
   async getMarketPrices() {
-    return request('/crypto/prices');
+    try {
+      return await marketService.getPrices('brl');
+    } catch {
+      return request('/crypto/prices');
+    }
   },
 };

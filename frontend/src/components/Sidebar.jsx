@@ -164,7 +164,6 @@ const navItems = [
   { to: '/', label: 'Dashboard', icon: FaChartPie, end: true },
   { to: '/wallet', label: 'Carteira', icon: FaWallet },
   { to: '/virtual-card', label: 'Cartão Virtual', icon: FaCreditCard },
-  { to: '/convert', label: 'Converter', icon: FaSyncAlt },
   { to: '/transfer', label: 'Transferir', icon: FaPaperPlane },
   { to: '/settings', label: 'Configurações', icon: FaCog },
 ]

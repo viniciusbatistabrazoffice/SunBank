@@ -3,7 +3,6 @@ import './Sidebar.css';
 
 const menuItems = [
   { to: '/', label: 'Dashboard', end: true },
-  { to: '/convert', label: 'Converter' },
   { to: '/transfer', label: 'Transferir' },
 ];
 

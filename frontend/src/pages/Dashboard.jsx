@@ -8,7 +8,6 @@ import {
   FaBitcoin,
   FaEthereum,
   FaSyncAlt,
-  FaExchangeAlt,
   FaPaperPlane,
 } from 'react-icons/fa';
 import {
@@ -313,10 +312,6 @@ export function Dashboard() {
         <SectionTitle>Ações rápidas</SectionTitle>
         <Card>
           <QuickActions>
-            <Button $variant="primary" onClick={() => navigate('/convert')}>
-              <FaExchangeAlt size={16} />
-              Converter
-            </Button>
             <Button $variant="secondary" onClick={() => navigate('/transfer')}>
               <FaPaperPlane size={16} />
               Transferir
