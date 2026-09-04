@@ -26,7 +26,7 @@ public class Cripto {
     private BigDecimal valor;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "client_id", nullable = false)
+    @JoinColumn(name = "client_id", nullable = false, foreignKey = @ForeignKey(name = "fk_criptos_client"))
     private Client client;
 
     @Column(nullable = false)

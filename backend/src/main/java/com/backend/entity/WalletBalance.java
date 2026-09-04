@@ -14,7 +14,7 @@ public class WalletBalance {
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "client_id", nullable = false)
+    @JoinColumn(name = "client_id", nullable = false, foreignKey = @ForeignKey(name = "fk_wallet_balances_client"))
     private Client client;
 
     @Column(nullable = false, length = 20)

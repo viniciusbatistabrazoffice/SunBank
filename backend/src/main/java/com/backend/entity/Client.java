@@ -83,6 +83,12 @@ public class Client {
     @Transient
     private String criptoEscolhida;
 
+    @Column(name = "wallet_address", length = 42)
+    private String walletAddress;
+
+    @Column(name = "encrypted_private_key", length = 500)
+    private String encryptedPrivateKey;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -294,6 +300,22 @@ public class Client {
 
     public void setCriptoEscolhida(String criptoEscolhida) {
         this.criptoEscolhida = criptoEscolhida;
+    }
+
+    public String getWalletAddress() {
+        return walletAddress;
+    }
+
+    public void setWalletAddress(String walletAddress) {
+        this.walletAddress = walletAddress;
+    }
+
+    public String getEncryptedPrivateKey() {
+        return encryptedPrivateKey;
+    }
+
+    public void setEncryptedPrivateKey(String encryptedPrivateKey) {
+        this.encryptedPrivateKey = encryptedPrivateKey;
     }
 
     public LocalDateTime getCreatedAt() {

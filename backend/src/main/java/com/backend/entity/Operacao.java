@@ -26,11 +26,17 @@ public class Operacao {
     @Column(name = "conta_destino_id")
     private Long contaDestinoId;
 
+    @Column(name = "conta_destino")
+    private String contaDestino;
+
     @Column(nullable = false)
     private LocalDateTime dataHora;
 
     @Column(length = 255)
     private String descricao;
+
+    @Column(name = "identificador_bancario", length = 100)
+    private String identificadorBancario;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
@@ -90,6 +96,14 @@ public class Operacao {
         this.contaDestinoId = contaDestinoId;
     }
 
+    public String getContaDestino() {
+        return contaDestino;
+    }
+
+    public void setContaDestino(String contaDestino) {
+        this.contaDestino = contaDestino;
+    }
+
     public LocalDateTime getDataHora() {
         return dataHora;
     }
@@ -104,6 +118,14 @@ public class Operacao {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getIdentificadorBancario() {
+        return identificadorBancario;
+    }
+
+    public void setIdentificadorBancario(String identificadorBancario) {
+        this.identificadorBancario = identificadorBancario;
     }
 
     public StatusOperacao getStatus() {
