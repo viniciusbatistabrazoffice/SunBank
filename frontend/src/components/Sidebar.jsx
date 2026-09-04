@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { FaChartPie, FaWallet, FaSyncAlt, FaPaperPlane, FaCog, FaSignOutAlt, FaPlus, FaUserCircle } from 'react-icons/fa'
+import { FaChartPie, FaWallet, FaSyncAlt, FaPaperPlane, FaCreditCard, FaCog, FaSignOutAlt, FaPlus, FaUserCircle } from 'react-icons/fa'
 import logo from '../assets/logo.svg'
 
 const SidebarContainer = styled.aside`
@@ -163,6 +163,7 @@ const Footer = styled.div`
 const navItems = [
   { to: '/', label: 'Dashboard', icon: FaChartPie, end: true },
   { to: '/wallet', label: 'Carteira', icon: FaWallet },
+  { to: '/virtual-card', label: 'Cartão Virtual', icon: FaCreditCard },
   { to: '/convert', label: 'Converter', icon: FaSyncAlt },
   { to: '/transfer', label: 'Transferir', icon: FaPaperPlane },
   { to: '/settings', label: 'Configurações', icon: FaCog },

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { FaSyncAlt } from 'react-icons/fa';
-import { CryptoBalance } from '../../components/crypto/CryptoBalance';
+import { WalletList } from '../../components/wallet/WalletList';
 import { useWallet } from '../../contexts/WalletContext';
 import { Header, PageTitle } from '../../components/Layout';
 import { Button } from '../../components/Button';
@@ -41,7 +41,7 @@ const Spinner = styled(FaSyncAlt)`
 `;
 
 export function Wallet() {
-  const { balances, prices, loading, error, fetchWallet, totalBrl } = useWallet();
+  const { balances, prices, cards, loading, error, fetchWallet, totalBrl } = useWallet();
 
   useEffect(() => {
     fetchWallet();
@@ -67,7 +67,7 @@ export function Wallet() {
 
         {error && <Status $error>{error}</Status>}
 
-        <CryptoBalance balances={balances} prices={prices} totalBrl={totalBrl} />
+        <WalletList balances={balances} prices={prices} totalBrl={totalBrl} cards={cards} />
       </Content>
     </Page>
   );
