@@ -4,6 +4,7 @@ export const Main = styled.main`
   margin-left: 260px;
   min-height: 100vh;
   padding: ${({ theme }) => theme.spacing.xl};
+  padding-top: 64px;
   background: ${({ theme }) => theme.colors.background};
 `
 
@@ -11,6 +12,7 @@ export const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: ${({ theme }) => theme.spacing.xl};
   margin-bottom: ${({ theme }) => theme.spacing.xl};
 `
 

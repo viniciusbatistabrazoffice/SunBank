@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { Header } from '../components/common/Header';
 import { Sidebar } from '../components/Sidebar';
 import { Main } from '../components/Layout';
 import { Dashboard } from '../pages/Dashboard.jsx';
@@ -10,6 +11,7 @@ import { Settings } from '../pages/Settings';
 export function AppRoutes() {
   return (
     <>
+      <Header />
       <Sidebar />
       <Main as="div">
         <Routes>
