@@ -1,0 +1,18 @@
+{
+  "name": "sunbraz-contract",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "deploy:local": "hardhat run --network hardhat scripts/deploy.js",
+    "deploy:testnet": "hardhat run --network sepolia scripts/deploy.js"
+  },
+  "devDependencies": {
+    "hardhat": "^2.17.3",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "ethers": "^5.7.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.3"
+  }
+}

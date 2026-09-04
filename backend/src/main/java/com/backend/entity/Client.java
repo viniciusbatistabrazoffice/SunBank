@@ -80,6 +80,9 @@ public class Client {
     @Column(nullable = false)
     private boolean active;
 
+    @Transient
+    private String criptoEscolhida;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -283,6 +286,14 @@ public class Client {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getCriptoEscolhida() {
+        return criptoEscolhida;
+    }
+
+    public void setCriptoEscolhida(String criptoEscolhida) {
+        this.criptoEscolhida = criptoEscolhida;
     }
 
     public LocalDateTime getCreatedAt() {
