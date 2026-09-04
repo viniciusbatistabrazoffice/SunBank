@@ -1,7 +1,9 @@
 package com.backend.service;
 
 import com.backend.entity.Auth;
+import com.backend.entity.Client;
 import com.backend.repository.AuthRepository;
+import com.backend.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -12,10 +14,12 @@ import java.util.Optional;
 public class AuthServiceImpl implements AuthService {
 
     private final AuthRepository authRepository;
+    private final ClientRepository clientRepository;
     private final SecureRandom random = new SecureRandom();
 
-    public AuthServiceImpl(AuthRepository authRepository) {
+    public AuthServiceImpl(AuthRepository authRepository, ClientRepository clientRepository) {
         this.authRepository = authRepository;
+        this.clientRepository = clientRepository;
     }
 
     @Override
@@ -25,6 +29,10 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Invalid credentials");
         }
         Auth user = existing.get();
+        Client client = clientRepository.findById(user.getClientId()).orElse(null);
+        if (client != null) {
+            user.setCripto(client.getCryptocurrencyTokenId());
+        }
         user.setAuthToken(new BigInteger(64, random));
         return authRepository.save(user);
     }

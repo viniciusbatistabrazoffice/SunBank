@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
@@ -33,6 +34,9 @@ public class Auth {
 
     @Column(name = "auth_token")
     private BigInteger authToken;
+
+    @Transient
+    private String cripto;
 
     @Column(name = "data_criacao")
     private LocalDate dataCriacao;
@@ -109,6 +113,14 @@ public class Auth {
 
     public void setAuthToken(BigInteger authToken) {
         this.authToken = authToken;
+    }
+
+    public String getCripto() {
+        return cripto;
+    }
+
+    public void setCripto(String cripto) {
+        this.cripto = cripto;
     }
 
     public LocalDate getDataCriacao() {

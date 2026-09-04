@@ -1,7 +1,9 @@
 package com.backend.service;
 
 import com.backend.entity.Auth;
+import com.backend.entity.Client;
 import com.backend.repository.AuthRepository;
+import com.backend.repository.ClientRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,11 +22,14 @@ class AuthServiceImplTest {
     @Mock
     private AuthRepository authRepository;
 
+    @Mock
+    private ClientRepository clientRepository;
+
     private AuthServiceImpl authService;
 
     @BeforeEach
     void setUp() {
-        authService = new AuthServiceImpl(authRepository);
+        authService = new AuthServiceImpl(authRepository, clientRepository);
     }
 
     private Auth auth(Long id, String username, String password, BigInteger token) {
@@ -35,13 +40,17 @@ class AuthServiceImplTest {
     void signinShouldReturnUserWithTokenWhenCredentialsAreValid() {
         Auth credentials = auth(null, "joao", "123456", null);
         Auth stored = auth(1L, "joao", "123456", null);
+        Client client = new Client("João Silva", "12345678900", "joao@email.com", "11999999999");
+        client.setCryptocurrencyTokenId("token123");
         when(authRepository.findByUsername("joao")).thenReturn(Optional.of(stored));
+        when(clientRepository.findById(1L)).thenReturn(Optional.of(client));
         when(authRepository.save(stored)).thenReturn(stored);
 
         Auth result = authService.signin(credentials);
 
         assertEquals("joao", result.getUsername());
         assertNotNull(result.getAuthToken());
+        assertEquals("token123", result.getCripto());
         verify(authRepository).findByUsername("joao");
         verify(authRepository).save(stored);
     }
