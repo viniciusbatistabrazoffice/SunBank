@@ -1,6 +1,12 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+import { mockRequest } from './mockApi';
+
+const API_BASE_URL = import.meta.env.REACT_APP_API_URL || import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
 
 export async function request(path, options = {}) {
+  if (USE_MOCK) {
+    return mockRequest(path, options);
+  }
   const url = `${API_BASE_URL}${path}`;
 
   const config = {

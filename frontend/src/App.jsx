@@ -1,20 +1,24 @@
-import { ThemeProvider } from 'styled-components'
-import { theme } from './styles/theme'
-import { GlobalStyles } from './styles/GlobalStyles'
-import { Sidebar } from './components/Sidebar'
-import { Main } from './components/Layout'
-import { Dashboard } from './pages/Dashboard'
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import { theme } from './styles/theme';
+import { GlobalStyles } from './styles/GlobalStyles';
+import { AuthProvider } from './contexts/AuthContext';
+import { WalletProvider } from './contexts/WalletContext';
+import { AppRoutes } from './routes/AppRoutes';
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <Sidebar />
-      <Main>
-        <Dashboard />
-      </Main>
-    </ThemeProvider>
-  )
+    <BrowserRouter>
+      <AuthProvider>
+        <WalletProvider>
+          <ThemeProvider theme={theme}>
+            <GlobalStyles />
+            <AppRoutes />
+          </ThemeProvider>
+        </WalletProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
