@@ -1,3 +1,16 @@
 target/
+.git/
+.github/
+.gitignore
+.gitattributes
 .idea/
 *.iml
+.mvn/
+mvnw
+mvnw.cmd
+*.md
+*.sh
+.env
+.env.*
+docker-compose*.yml
+Dockerfile*

@@ -21,11 +21,14 @@ class OperacaoServiceImplTest {
     @Mock
     private OperacaoRepository operacaoRepository;
 
+    @Mock
+    private BancoDoBrasilService bancoDoBrasilService;
+
     private OperacaoServiceImpl operacaoService;
 
     @BeforeEach
     void setUp() {
-        operacaoService = new OperacaoServiceImpl(operacaoRepository);
+        operacaoService = new OperacaoServiceImpl(operacaoRepository, bancoDoBrasilService);
     }
 
     @Test
