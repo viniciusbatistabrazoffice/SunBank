@@ -4,10 +4,13 @@ import com.backend.dto.CarteiraEnviarRequest;
 import com.backend.dto.CarteiraEnvioResponse;
 import com.backend.dto.CarteiraResponse;
 import com.backend.dto.CarteiraSaldoResponse;
+import com.backend.dto.VendaEthRequest;
+import com.backend.dto.VendaEthResponse;
 
 public interface CarteiraService {
     CarteiraResponse criar(String token);
     CarteiraResponse consultar(String token);
     CarteiraSaldoResponse saldo(String token);
     CarteiraEnvioResponse enviar(String token, CarteiraEnviarRequest request);
+    VendaEthResponse vender(String token, VendaEthRequest request);
 }

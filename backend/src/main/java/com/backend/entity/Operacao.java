@@ -11,7 +11,8 @@ public class Operacao {
     public enum TipoOperacao {
         DEPOSITO,
         SAQUE,
-        TRANSFERENCIA
+        TRANSFERENCIA,
+        VENDA_ETH
     }
 
     @Id

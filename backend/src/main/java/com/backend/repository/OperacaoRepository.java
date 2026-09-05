@@ -16,7 +16,7 @@ public interface OperacaoRepository extends JpaRepository<Operacao, Long> {
     List<Operacao> findByOrigemOrDestinoOrderByCreatedAtDesc(Auth origem, Auth destino);
 
     @Query("SELECT COALESCE(SUM(o.valor), 0) FROM Operacao o " +
-            "WHERE o.destino = :usuario OR (o.origem = :usuario AND o.tipo = 'DEPOSITO')")
+            "WHERE o.destino = :usuario OR (o.origem = :usuario AND o.tipo IN ('DEPOSITO', 'VENDA_ETH'))")
     BigDecimal somaCreditos(@Param("usuario") Auth usuario);
 
     @Query("SELECT COALESCE(SUM(o.valor), 0) FROM Operacao o " +

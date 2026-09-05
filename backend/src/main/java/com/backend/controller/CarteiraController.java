@@ -4,6 +4,8 @@ import com.backend.dto.CarteiraEnviarRequest;
 import com.backend.dto.CarteiraEnvioResponse;
 import com.backend.dto.CarteiraResponse;
 import com.backend.dto.CarteiraSaldoResponse;
+import com.backend.dto.VendaEthRequest;
+import com.backend.dto.VendaEthResponse;
 import com.backend.service.CarteiraService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +44,12 @@ public class CarteiraController {
             @RequestHeader(value = "Authorization", required = false) String token,
             @RequestBody CarteiraEnviarRequest request) {
         return ResponseEntity.ok(carteiraService.enviar(token, request));
+    }
+
+    @PostMapping("/vender")
+    public ResponseEntity<VendaEthResponse> vender(
+            @RequestHeader(value = "Authorization", required = false) String token,
+            @RequestBody VendaEthRequest request) {
+        return ResponseEntity.ok(carteiraService.vender(token, request));
     }
 }
